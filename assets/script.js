@@ -1,7 +1,58 @@
-const cityFormEl = document.querySelector("#city-search_form");
-const cityInputEl = document.querySelector("#city");
-const weatherContainerEl = document.querySelector("#current-weather_container");
-const citySearchInputEl = document.querySelector("#searched-city");
-const forecastTitle = document.querySelector("#forecast");
-const forecastContainerEl = document.querySelector("#fiveday-container");
-const pastSearchButtonEl = document.querySelector("#past-search_buttons");
+var cityFormEl = document.querySelector("#city-search-form");
+var cityInputEl = document.querySelector("#city");
+var weatherContainerEl = document.querySelector("#current-weather-container");
+var citySearchInputEl = document.querySelector("#searched-city");
+var forecastTitle = document.querySelector("#forecast");
+var forecastContainerEl = document.querySelector("#fiveday-container");
+var pastSearchButtonEl = document.querySelector("#past-search-buttons");
+
+var cities = [];
+
+// Function that pulls information from the weather form
+
+var formSubmitHandler = function (event) {
+    event.preventDefault();
+    var city = cityInputEl.value.trim();
+    if (city) {
+        getCityWeather(city);
+        get5Day(city);
+        cities.unshift({ city });
+        cityInputEl.value = "";
+    } else {
+        alert("Please enter a City");
+    }
+    saveSearch();
+    pastSearch(city);
+};
+
+// Function to save to local storage
+
+var saveSearch = function () {
+    localStorage.setItem("cities", JSON.stringify(cities));
+};
+
+// Function that uses the OpenWeather API to obtian city's weather
+
+var getCityWeather = function (city) {
+    var apiKey = "844421298d794574c100e3409cee0499";
+    var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
+
+    fetch(apiURL).then(function (response) {
+        response.json().then(function (data) {
+            displayWeather(data, city);
+        });
+    });
+};
+
+// Function that calls for the Five-day Forecast
+
+var get5Day = function (city) {
+    var apiKey = "844421298d794574c100e3409cee0499";
+    var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
+
+    fetch(apiURL).then(function (response) {
+        response.json().then(function (data) {
+            display5Day(data);
+        });
+    });
+};
