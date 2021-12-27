@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/style.css" />
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+    <header  class="container-fluid text-center text-white bg-info">
+        <h1>Weather Dashboard</h1>
+    </header>
+    <!-- Main Container -->
+    <main class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-3 p-2 search-column">
+                <form class="border p-2" id="city-search-form">
+                    <h3>Search for a City</h3>
+                    <!-- Input for city search -->
+                    <input id="city" type="text" autofocus="true" class="form-input" />
+                    <button class="btn btn-info" type="submit">Search</button>
+                </form>
+                <div class="past-search border" id="past-search_buttons"></div>
+            </div>
+            <div class="col-12 col-md-9">
+                <!-- Current Weather -->
+                <div class="row border selected-city" id="current-forecast">
+                    <div class="col-12">
+                        <h2 id="searched-city">Current Weather:</h2>
+                        <div id="current-weather_container" class="list-group"></div>
+                    </div>
+                </div>
+                <!-- Five Day Forecast -->
+                <div class="row border five-day-forecast" id="five-day-forecast">
+                    <h3 class="col-12" id="forecast">Five Day Forecast:</h3>
+                    <div class="d-flex" id="fiveday-container"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./assets/script.js"></script>
+
+</body>
+
+</html>
