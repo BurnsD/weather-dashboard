@@ -44,6 +44,52 @@ var getCityWeather = function (city) {
     });
 };
 
+// Function that displays information into the weather contianer
+
+var displayWeather = function (weather, searchCity) {
+    // Clears 
+    weatherContainerEl.textContent = "";
+    citySearchInputEl.textContent = searchCity;
+
+    // Creates date element
+    var currentDate = document.createElement("span");
+    currentDate.textContent =
+        " (" + moment(weather.dt.value).format("MMM D, YYYY") + ") ";
+    citySearchInputEl.appendChild(currentDate);
+
+    // Creates image element for icon
+    var weatherIcon = document.createElement("img");
+    weatherIcon.setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`
+    );
+    citySearchInputEl.appendChild(weatherIcon);
+
+
+    // Element for Temperature Data
+    var temperatureEl = document.createElement("span");
+    temperatureEl.textContent = "Temperature: " + weather.main.temp + " °F";
+    temperatureEl.classList = "list-group-item";
+
+    // Element for Humidity Data
+    var humidityEl = document.createElement("span");
+    humidityEl.textContent = "Humidity: " + weather.main.humidity + " %";
+    humidityEl.classList = "list-group-item";
+
+    // Element for Wind Data
+    var windSpeedEl = document.createElement("span");
+    windSpeedEl.textContent = "Wind Speed: " + weather.wind.speed + " MPH";
+    windSpeedEl.classList = "list-group-item";
+
+    weatherContainerEl.appendChild(temperatureEl);
+    weatherContainerEl.appendChild(humidityEl);
+    weatherContainerEl.appendChild(windSpeedEl);
+
+    var lat = weather.coord.lat;
+    var lon = weather.coord.lon;
+    getUvIndex(lat, lon);
+};
+
 // Function that calls for the Five-day Forecast
 
 var get5Day = function (city) {
@@ -56,3 +102,10 @@ var get5Day = function (city) {
         });
     });
 };
+
+
+
+// Event Listeners for Form and Search
+
+cityFormEl.addEventListener("submit", formSubmitHandler);
+pastSearchButtonEl.addEventListener("click", pastSearchHandler);
